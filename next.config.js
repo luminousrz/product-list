@@ -8,7 +8,7 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'i.dummyjson.com', // برای اطمینان، بعضی عکس‌ها از این دامنه میان
+        hostname: 'i.dummyjson.com', 
       },
     ],
   },

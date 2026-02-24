@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
 @import "tailwindcss";
 
 :root {
-  background-color: rgb(245, 250, 255);
+  font-family: "Urbanist", sans-serif;
+  background-color: rgb(226, 226, 226);
 }
