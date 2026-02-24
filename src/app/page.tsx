@@ -1,5 +1,7 @@
 'use client';
 
+import ProductCard from "../features/components/ProductCard";
+import ProductModal from "../features/components/ProductModal";
 import { useDebounce } from "../features/products/hooks/useDebounce";
 import { useProducts } from "../features/products/hooks/useProducts";
 import { useProductStore } from "../features/store/product.store";
@@ -40,6 +42,7 @@ export default function Home() {
 
   return (
     <div className="p-8">
+      <ProductModal></ProductModal>
       <div className="flex justify-center gap-5 mb-4">
         {data && (
           <p>{data.total} Products</p>
@@ -50,30 +53,9 @@ export default function Home() {
           onChange={(e) => setSearch(e.target.value)} placeholder="Search Product" className="w-[90%] px-5 py-1 placeholder:text-gray-400 outline-0 text-gray-500" />
         </div>
       </div>
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-5 justify-center">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-5">
         {data?.products.map((p) => (
-          <div key={p.id} className="grid justify-center items-center">
-            <div className="rounded-xl p-5 shadow-md bg-gray-50 flex flex-col gap-3 w-65 min-h-95">
-              <div className="flex flex-col items-center">
-                <Image
-                  src={p.thumbnail}
-                  alt={p.title}
-                  width={200}
-                  height={200}
-                  className="rounded-lg object-cover bg-mist-100"
-                />
-              </div>
-              <p>{p.title}</p>
-              <div>
-                <div className="flex gap-2 items-center">
-                  <span className="p-1 rounded-md bg-black text-white">10%</span>
-                  <del className="text-gray-500">{p.price}</del>
-                </div>
-                <p>${p.discountPercentage}</p>
-              </div>
-
-            </div>
-          </div>
+          <ProductCard key={p.id} product={p}></ProductCard>
         ))}
       </div>
 
