@@ -47,7 +47,7 @@ export default function Home() {
         {data && (
           <p>{data.total} Products</p>
         )}
-        <div className="rounded-md relative bg-white flex items-center h-7.5 px-3 w-[90%]">
+        <div className="rounded-xl relative bg-white flex items-center h-10 px-3 w-[90%]">
           <CiSearch className="absolute text-[#747e8d]"/>
           <input type="text"  value={search}
           onChange={(e) => setSearch(e.target.value)} placeholder="Search Product" className="w-[90%] px-5 py-1 placeholder:text-gray-400 outline-0 text-gray-500" />
