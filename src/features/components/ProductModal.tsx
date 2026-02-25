@@ -1,10 +1,9 @@
 'use client';
-import Image from 'next/image';
+
 import { useProductModal } from '../store/product.store';
 import { AiOutlineHeart } from "react-icons/ai"; 
 import { MdAssignmentReturn } from "react-icons/md"; 
 import { BiBadgeCheck } from "react-icons/bi"; 
-
 import { FaShippingFast } from "react-icons/fa"; 
 import ProductGallery from './ProductGallery';
 

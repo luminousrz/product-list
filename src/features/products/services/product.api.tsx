@@ -1,27 +1,46 @@
 import axios from "axios";
+import { SortOption } from "../types";
+
 
 const api = axios.create({
     baseURL: 'https://dummyjson.com',
 })
+const SORT_MAP = {
+  'newest' : {sortBy:'id' , order:'desc'},
+  'price-desc' : {sortBy:'price' , order:'desc'},
+  'price-asc' : {sortBy:'price' , order:'asc'},
+  'discount-desc' : {sortBy:'discountPercentage' , order:'desc'},
+} as const;
 
 export const getProducts = async (params: {
   limit: number;
   skip: number;
   search?: string;
   category?: string;
+  sort?: SortOption;
 }) => {
-  const { limit, skip, search, category } = params;
+  const { limit, skip, search, category, sort} = params;
 
-  if (search) {
-    const { data } = await api.get(`/products/search?q=${search}&limit=${limit}&skip=${skip}`);
-    return data;
+  const query = new URLSearchParams();
+  query.set('limit', String(limit));
+  query.set('skip', String(skip));
+
+  if(sort){
+    const {sortBy , order} = SORT_MAP[sort]
+    query.set('sortBy',sortBy)
+    query.set('order', order)
   }
 
-  if (category) {
-    const { data } = await api.get(`/products/category/${category}?limit=${limit}&skip=${skip}`);
-    return data;
-  }
+  let url = '/products'
 
-  const { data } = await api.get(`/products?limit=${limit}&skip=${skip}`);
+  if(search){
+    query.set('q', search)
+    url = '/products/search'
+  } else if (category) {
+    query.set('category', category)
+    url = `/products/category/${category}`
+  }
+  
+  const { data } = await api.get(`${url}?${query.toString()}`);
   return data;
 };

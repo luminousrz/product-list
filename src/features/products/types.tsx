@@ -24,4 +24,10 @@ export type GetProductsParams = {
   skip: number;
   search?: string;
   category?: string;
+  sort?: 'newest' | 'price-desc' | 'price-asc' | 'discount-desc';
 };
+export type SortOption = 
+  | 'newest'
+  | 'price-desc'
+  | 'price-asc'
+  | 'discount-desc';

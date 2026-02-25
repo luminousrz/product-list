@@ -5,20 +5,20 @@ import ProductModal from "../features/components/ProductModal";
 import { useDebounce } from "../features/products/hooks/useDebounce";
 import { useProducts } from "../features/products/hooks/useProducts";
 import { useProductStore } from "../features/store/product.store";
-import Image from "next/image";
 import { CiSearch } from "react-icons/ci";
-
+import SortDropdown from "../features/components/SortDropdown";
 const LIMIT = 20;
 
 export default function Home() {
-  const { page, search, category, setPage, setSearch } = useProductStore();
+  const { page, search, category, sort, setPage, setSearch } = useProductStore();
   const debouncedSearch = useDebounce(search, 600);
 
   const { data, isLoading, isError } = useProducts({
     limit: LIMIT,
     skip: (page - 1) * LIMIT,
     search: debouncedSearch,
-    category
+    category,
+    sort,
   });
 
  if (isLoading)
@@ -53,6 +53,11 @@ export default function Home() {
           onChange={(e) => setSearch(e.target.value)} placeholder="Search Product" className="w-[90%] px-5 py-1 placeholder:text-gray-400 outline-0 text-gray-500" />
         </div>
       </div>
+
+      <div className="flex items-center gap-3 mb-4">
+          <SortDropdown />
+      </div>
+      
       <div className="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-5">
         {data?.products.map((p) => (
           <ProductCard key={p.id} product={p}></ProductCard>

@@ -10,7 +10,6 @@ type ModalImageProps = {
 }
 export default function ModalImages ({src, alt, className, onClick, isActive}: ModalImageProps){
     const [loaded , setLoaded] = useState(false)
-
     return (
         // The main pic (big one)
         <div

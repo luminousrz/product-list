@@ -3,9 +3,9 @@ import { Product } from "../products/types"
 import Image from "next/image"
 import { useProductModal } from "../store/product.store"
 
-    type ProductCardProps = {
-        product: Product;
-    }
+type ProductCardProps = {
+    product: Product;
+}
 export default function ProductCard({product}: ProductCardProps) {
     const open = useProductModal((s) => s.open)
   return (
@@ -28,7 +28,6 @@ export default function ProductCard({product}: ProductCardProps) {
                 </div>
                 <p>${product.discountPercentage}</p>
             </div>
-    
         </div>
     </div>
   )
