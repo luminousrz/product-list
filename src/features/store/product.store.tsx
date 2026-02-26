@@ -5,23 +5,34 @@ import { SortOption } from '../products/types';
 type ProductStore = {
   page: number;
   search: string;
-  category: string;
+  categories: string[];
   sort: SortOption;
   setPage: (page: number) => void;
   setSearch: (value: string) => void;
-  setCategory: (value: string) => void;
+  toggleCategory: (slug: string) => void;
+  clearCategories: () => void;
   setSort: (v: SortOption) => void;
 };
 
-export const useProductStore = create<ProductStore>((set) => ({
+export const useProductStore = create<ProductStore>((set, get) => ({
   page: 1,
   search: '',
-  category: '',
+  categories: [],
   sort: 'newest',
   setPage: (page) => set({ page }),
   setSearch: (search) => set({ search, page: 1 }),
-  setCategory: (category) => set({ category, page: 1 }),
-  setSort: (sort) => set({ sort , page:1 }),
+  toggleCategory: (slug) => {
+    const { categories } = get();
+    const exists = categories.includes(slug);
+    set({
+      categories: exists
+        ? categories.filter((c) => c !== slug)
+        : [...categories, slug],
+      page: 1,
+    });
+  },
+  clearCategories: () => set({ categories: [], page: 1 }),
+  setSort: (sort) => set({ sort, page: 1 }),
 }));
 
 type ProductModalState = {

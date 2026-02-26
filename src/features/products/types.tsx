@@ -10,6 +10,10 @@ export type Product = {
   category: string;
   thumbnail: string;
   images: string[];
+  warrantyInformation: string;
+  shippingInformation: string;
+  availabilityStatus: string;
+  reviews: []
 };
 
 export type ProductsResponse = {
@@ -23,7 +27,6 @@ export type GetProductsParams = {
   limit: number;
   skip: number;
   search?: string;
-  category?: string;
   sort?: 'newest' | 'price-desc' | 'price-asc' | 'discount-desc';
 };
 export type SortOption = 
@@ -31,3 +34,9 @@ export type SortOption =
   | 'price-desc'
   | 'price-asc'
   | 'discount-desc';
+
+export type Category = {
+  slug: string;
+  name: string;
+  url: string;
+};

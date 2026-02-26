@@ -24,9 +24,9 @@ export default function ProductCard({product}: ProductCardProps) {
             <div>
                 <div className="flex gap-2 items-center">
                     <span className="p-1 rounded-md bg-black text-white">10%</span>
-                    <del className="text-gray-500">{product.price}</del>
+                    <del className="text-gray-500">{product.discountPercentage}</del>
                 </div>
-                <p>${product.discountPercentage}</p>
+                <p>${product.price}</p>
             </div>
         </div>
     </div>

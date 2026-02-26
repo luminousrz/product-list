@@ -6,13 +6,18 @@ import { MdAssignmentReturn } from "react-icons/md";
 import { BiBadgeCheck } from "react-icons/bi"; 
 import { FaShippingFast } from "react-icons/fa"; 
 import ProductGallery from './ProductGallery';
+import { useState } from 'react';
 
 export default function ProductModal() {
   const product = useProductModal((s) => s.selectedProduct);
   const close = useProductModal((s) => s.close);
+  const [isCartModalOpen , setIsCartModalOepn] = useState(false)
+
+  const addToCart = () => {
+    setIsCartModalOepn(true)
+  }
 
   if (!product) return null;
-
   return (
     <>
     <div onClick={close} className="fixed inset-0 bg-black/10 backdrop-blur-xs z-40"/>
@@ -33,16 +38,15 @@ export default function ProductModal() {
 
             {/* Info */}
             <div className='flex flex-col justify-between'>
-              <p className="text-sm text-gray-400">{product.category}</p>
-              <div className='flex flex-col'>
-                <h2 className="text-xl font-semibold">{product.title}</h2>
-                <span className=" text-green-700 ">
-                  {product.stock > 0 ? 'In Stock' : 'Out of Stock'}
-                </span>
-              </div>
-
+              <p className=" text-gray-400">{product.category}</p>
+              
+              <h2 className="text-xl font-semibold">{product.title}</h2>
+              <p style={{ color: product.availabilityStatus === "Low Stock" ? "orange" : product.availabilityStatus === "In Stock" ? "green" : "red"}}>
+                {product.availabilityStatus}
+              </p>
+              
               <div className="mt-2 flex items-center gap-2">
-                ⭐ {product.rating} | <span>123 Reviews</span>
+                ⭐ {product.rating} | <span>{product.reviews.length} Reviews</span>
               </div>
 
               <p className="mt-5 text-gray-600">
@@ -60,26 +64,48 @@ export default function ProductModal() {
               </div>
 
               <div className='flex gap-3 mt-6'>
-                <button className="w-full rounded-xl bg-black py-3 text-white">
+                {
+                  product.availabilityStatus === "Out of Stock" ? 
+                  <button className="w-full rounded-xl bg-gray-400 py-3 text-white">
+                    Out of Stock
+                  </button> 
+                  : 
+                  <button onClick={addToCart} className="w-full rounded-xl bg-black py-3 text-white">
                     Add to Cart
-                </button>
+                  </button>
+                }
+                {
+                  isCartModalOpen && (
+                    <div className="fixed inset-0 bg-black/40  z-40 flex items-center justify-center">
+                      <div className="bg-white p-6 rounded-2xl text-center">
+                        <p className="mb-4">{product.title} added to your cart successfully!</p>
+                        <button
+                          className="px-4 py-2 bg-green-900 text-white rounded-xl"
+                          onClick={() => setIsCartModalOepn(false)}
+                        >
+                          OK
+                        </button>
+                      </div>
+                    </div>
+                  )
+                }
                 <button className='border rounded-xl py-3 px-3'>
                     <AiOutlineHeart/>
                 </button>
               </div>
                 {/* Policy */}
-              <div className='border border-gray-100 flex flex-col gap-2 rounded-xl mt-4 py-2 px-4'>
+              <div className='border border-gray-100 flex flex-col gap-2 rounded-xl mt-4 py-2 px-4 '>
                 <div className='flex gap-2 text-[14px]'>
                     <FaShippingFast className='text-[20px]'/>
-                    <p>Shipping Information :</p><span className='text-gray-500'>Ships in 2 weeks</span>
+                    <p className='sm:block hidden'>Shipping Information :</p><span className='text-gray-500'>{product.shippingInformation}</span>
                 </div>
                 <div className='flex gap-2 text-[14px]'>
                     <BiBadgeCheck className='text-[20px]'/>
-                    <p>Warranty Information :</p><span className='text-gray-500'>3 years Warranty</span>
+                    <p className='sm:block hidden'>Warranty Information :</p><span className='text-gray-500'>{product.warrantyInformation}</span>
                 </div>
                 <div className='flex gap-2 text-[14px]'>
                     <MdAssignmentReturn className='text-[20px]'/>
-                    <p>Return Policy :</p><span className='text-gray-500'>7 days return policy</span>
+                    <p className='sm:block hidden'>Return Policy :</p><span className='text-gray-500'>7 days return policy</span>
                 </div>
               </div>
             </div>

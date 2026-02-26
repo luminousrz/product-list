@@ -17,7 +17,7 @@ export default function ProductGallery({ images, title }: ProductGalleryProps) {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="relative w-full h-96 rounded-xl overflow-hidden flex items-center justify-center">
+      <div className="relative w-full md:h-96 h-80 rounded-xl overflow-hidden flex items-center justify-center">
         <ModalImage
           src={images[activeIndex]}
           alt={title}

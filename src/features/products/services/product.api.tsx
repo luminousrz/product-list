@@ -1,5 +1,5 @@
 import axios from "axios";
-import { SortOption } from "../types";
+import { Category, SortOption } from "../types";
 
 
 const api = axios.create({
@@ -42,5 +42,10 @@ export const getProducts = async (params: {
   }
   
   const { data } = await api.get(`${url}?${query.toString()}`);
+  return data;
+};
+
+export const getCategories = async (): Promise<Category[]> => {
+  const { data } = await api.get('/products/categories');
   return data;
 };
