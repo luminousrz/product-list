@@ -76,7 +76,7 @@ export default function ProductModal() {
                 }
                 {
                   isCartModalOpen && (
-                    <div className="fixed inset-0 bg-black/40  z-40 flex items-center justify-center">
+                    <div className="fixed inset-0 bg-black/40  z-40 flex items-center justify-center p-4">
                       <div className="bg-white p-6 rounded-2xl text-center">
                         <p className="mb-4">{product.title} added to your cart successfully!</p>
                         <button

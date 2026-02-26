@@ -108,6 +108,11 @@ export default function Home() {
                   <CategoryDropdown />
                 </div>
               </SwiperSlide>
+              <SwiperSlide className="w-auto!">
+                <div onPointerDown={(e) => e.stopPropagation()}>
+                  <CategoryDropdown />
+                </div>
+              </SwiperSlide>
             </Swiper>
           </div>
           <div className="hidden md:flex gap-4">
