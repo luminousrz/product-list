@@ -89,24 +89,31 @@ export default function Home() {
       </div>
 
       <div className="flex items-center justify-center gap-3 mb-4">
-          <div className="lg:hidden w-full">
+          <div className="md:hidden w-full">
             <Swiper
               spaceBetween={8}
               slidesPerView={"auto"}
               grabCursor={true}
-              noSwiping={true} 
-              noSwipingClass="swiper-no-swiping"
-              className='w-full'
+              touchStartPreventDefault={false}
+              className='w-full flex justify-center'
             >
-              <SwiperSlide>
-                <SortDropdown />
+              <SwiperSlide className="w-auto!">
+                <div onPointerDown={(e) => e.stopPropagation()}>
+                  <SortDropdown />
+                </div>
               </SwiperSlide>
-              <SwiperSlide>
-                <CategoryDropdown/>
+
+              <SwiperSlide className="w-auto!">
+                <div onPointerDown={(e) => e.stopPropagation()}>
+                  <CategoryDropdown />
+                </div>
               </SwiperSlide>
             </Swiper>
           </div>
-          
+          <div className="hidden md:flex gap-4">
+            <SortDropdown />
+            <CategoryDropdown />
+          </div>
       </div>
       {/* Render products based on what you chose */}
       <div className="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-5">

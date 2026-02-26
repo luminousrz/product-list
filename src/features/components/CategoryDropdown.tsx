@@ -37,7 +37,7 @@ export default function CategoryDropdown() {
               {categories.map((cat) => (
                 <label
                   key={cat.slug}
-                  className="flex items-center gap-2 cursor-pointer px-2 py-1 rounded hover:bg-gray-100"
+                  className="flex items-center gap-2 cursor-pointer px-2 py-1 rounded hover:bg-gray-100 outline-none"
                 >
                   <input
                     type="checkbox"
