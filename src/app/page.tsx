@@ -7,10 +7,11 @@ import { GrNext, GrPrevious } from "react-icons/gr";
 import 'swiper/css';
 import useFilteredProducts from "../features/products/hooks/useFilteredProducts";
 import ProductFilters from "../features/components/filters/ProductFilters";
+import EmptyState from "../features/components/EmptyState";
 
 export default function Home() {
   const { search, setSearch } = useProductStore();
-  const { products, totalCount, isLoading, isError, totalPages, currentPage, setPage } = useFilteredProducts();
+  const { products, totalCount, isLoading, isError, isSearching, totalPages, currentPage, setPage } = useFilteredProducts();
 
   if (isLoading)
   return (
@@ -44,17 +45,35 @@ export default function Home() {
             type="text" value={search} onChange={(e) => setSearch(e.target.value)} 
             placeholder="Search Product..." className="w-full pl-7 outline-0 text-gray-600" 
           />
+          {isSearching && (
+            <div className="absolute right-3 top-1/2 -translate-y-1/2">
+              <div className="h-4 w-4 border-2 border-gray-200 border-t-black rounded-full animate-spin" />
+            </div>
+          )}
         </div>
       </div>
 
       <ProductFilters />
 
-      {/* Product Grid */}
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-5">
-        {products.map((product) => (
-          <ProductCard key={product.id} product={product}/>
-        ))}
-      </div>
+      {isLoading && (
+          <div className="absolute inset-0 bg-white/50 backdrop-blur-[2px] z-20 flex items-center justify-center rounded-2xl">
+            <div className="flex flex-col items-center gap-2">
+              <span className="h-8 w-8 rounded-full border-3 border-gray-200 border-t-black animate-spin" />
+              <p className="text-xs font-medium text-gray-500">Updating results...</p>
+            </div>
+          </div>
+        )}
+
+        {/* Empty State vs Product Grid */}
+        {!isLoading && totalCount === 0 ? (
+          <EmptyState />
+        ) : (
+          <div className={`grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-5 transition-opacity duration-300 ${isSearching ? 'opacity-40' : 'opacity-100'}`}>
+            {products.map((product) => (
+              <ProductCard key={product.id} product={product}/>
+            ))}
+          </div>
+        )}
 
       {/* Pagination */}
       {totalPages > 1 && (
