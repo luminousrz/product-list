@@ -7,7 +7,7 @@ export default function StockSwitch() {
       onClick={toggleStock}
       className="flex items-center gap-3 px-4 py-2 rounded-xl bg-gray-50 border border-transparent hover:border-gray-200 transition-all"
     >
-      <span className="text-sm font-medium text-gray-700">In Stock Only</span>
+      <span className="text-sm text-gray-700">In Stock Only</span>
       <div 
         className={`relative w-10 h-5 rounded-full transition-colors duration-200 ${
           inStock ? 'bg-black' : 'bg-gray-300'
