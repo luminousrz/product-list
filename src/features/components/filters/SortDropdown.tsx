@@ -50,7 +50,7 @@ export default function SortDropdown(){
 
           <Dialog.Root>
             <Dialog.Trigger asChild>
-              <button className="md:hidden border-0 rounded-xl px-4 py-2 w-full text-left bg-gray-50">
+              <button className="md:hidden w-full rounded-xl px-4 py-2 bg-gray-50 text-left text-sm">
                 Sort: {options.find((o) => o.value === sort)?.label}
               </button>
             </Dialog.Trigger>

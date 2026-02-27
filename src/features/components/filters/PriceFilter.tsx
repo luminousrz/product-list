@@ -71,7 +71,7 @@ export default function PriceFilter() {
             </Dialog.Trigger>
             <Dialog.Portal>
               <Dialog.Overlay className="fixed inset-0 bg-black/30 z-60" />
-              <Dialog.Content className="fixed bottom-0 left-0 right-0 bg-white rounded-t-2xl p-4 z-70">
+              <Dialog.Content className="fixed bottom-0 left-0 right-0 bg-white rounded-t-2xl px-10 py-3 z-70">
                 <Dialog.Title>
                     <p className="text-lg font-semibold mb-3">Price Range</p>
                 </Dialog.Title>
