@@ -7,11 +7,16 @@ import { BiBadgeCheck } from "react-icons/bi";
 import { FaShippingFast } from "react-icons/fa"; 
 import ProductGallery from './ProductGallery';
 import { useState } from 'react';
+import { Product } from '../products/types';
+
 
 export default function ProductModal() {
   const product = useProductModal((s) => s.selectedProduct);
   const close = useProductModal((s) => s.close);
   const [isCartModalOpen , setIsCartModalOepn] = useState(false)
+  const discountAmount = ((product?.price ?? 0) * (product?.discountPercentage ?? 0)) / 100
+  const finalPrice = ((product?.price ?? 0) - discountAmount);
+  
 
   const addToCart = () => {
     setIsCartModalOepn(true)
@@ -55,11 +60,11 @@ export default function ProductModal() {
 
               <div className='mt-4 flex flex-col gap-1'>
                 <div className='flex items-center gap-2'>
-                    <div className='rounded-xl bg-black text-white p-2 text-sm'>10%</div>
-                    <del className='text-gray-600'>{product.discountPercentage}</del>
+                    <div className='rounded-xl bg-black text-white p-2 text-sm'>{product.discountPercentage} %</div>
+                    <del className='text-gray-600'>{product.price.toFixed(2)}</del>
                 </div>
                 <p className="text-2xl font-bold">
-                    ${product.price}
+                    ${finalPrice.toFixed(2)}
                 </p>
               </div>
 
@@ -80,7 +85,7 @@ export default function ProductModal() {
                       <div className="bg-white p-6 rounded-2xl text-center">
                         <p className="mb-4">{product.title} added to your cart successfully!</p>
                         <button
-                          className="px-4 py-2 bg-green-900 text-white rounded-xl"
+                          className="px-4 py-2 bg-green-900 text-white rounded-xl cursor-pointer"
                           onClick={() => setIsCartModalOepn(false)}
                         >
                           OK

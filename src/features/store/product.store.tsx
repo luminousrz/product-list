@@ -7,10 +7,13 @@ type ProductStore = {
   search: string;
   categories: string[];
   sort: SortOption;
+  brands:  string[]
   setPage: (page: number) => void;
   setSearch: (value: string) => void;
   toggleCategory: (slug: string) => void;
+  toggleBrand: (brand: string) => void;
   clearCategories: () => void;
+  clearBrands: () => void;
   setSort: (v: SortOption) => void;
 };
 
@@ -19,6 +22,7 @@ export const useProductStore = create<ProductStore>((set, get) => ({
   search: '',
   categories: [],
   sort: 'newest',
+  brands: [],
   setPage: (page) => set({ page }),
   setSearch: (search) => set({ search, page: 1 }),
   toggleCategory: (slug) => {
@@ -31,7 +35,18 @@ export const useProductStore = create<ProductStore>((set, get) => ({
       page: 1,
     });
   },
+
+  toggleBrand: (brand) => {
+    const { brands } = get();
+    set({
+      brands: brands.includes(brand)
+        ? brands.filter((b) => b !== brand)
+        : [...brands, brand],
+      page: 1,
+    });
+  },
   clearCategories: () => set({ categories: [], page: 1 }),
+  clearBrands: () => set({ brands: [], page: 1 }),
   setSort: (sort) => set({ sort, page: 1 }),
 }));
 

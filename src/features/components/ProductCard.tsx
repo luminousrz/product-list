@@ -6,7 +6,10 @@ import { useProductModal } from "../store/product.store"
 type ProductCardProps = {
     product: Product;
 }
+
 export default function ProductCard({product}: ProductCardProps) {
+    const discountAmount = (product.price * product.discountPercentage) / 100;
+    const finalPrice = product.price - discountAmount;
     const open = useProductModal((s) => s.open)
   return (
     <div className="grid justify-center items-center cursor-pointer" onClick={() => open(product)}>
@@ -21,12 +24,12 @@ export default function ProductCard({product}: ProductCardProps) {
                 />
             </div>
             <p>{product.title}</p>
-            <div>
+            <div className="flex flex-col gap-2">
                 <div className="flex gap-2 items-center">
-                    <span className="p-1 rounded-md bg-black text-white">10%</span>
-                    <del className="text-gray-500">{product.discountPercentage}</del>
+                    <span className="p-1 rounded-md bg-gray-500 text-white text-sm">{product.discountPercentage}%</span>
+                    <del className="text-gray-500">${product.price.toFixed(2)}</del>
                 </div>
-                <p>${product.price}</p>
+                <p className="text-xl font-bold">${finalPrice.toFixed(2)}</p>
             </div>
         </div>
     </div>

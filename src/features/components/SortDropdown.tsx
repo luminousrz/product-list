@@ -30,7 +30,7 @@ export default function SortDropdown(){
                 sideOffset={0}
                 avoidCollisions={false}
                 position="popper"
-                className="bg-white rounded-xl shadow-lg overflow-hidden min-w-(--radix-select-trigger-width)"
+                className="bg-white rounded-xl border shadow-lg overflow-hidden min-w-(--radix-select-trigger-width)"
               >
                 <Select.Viewport>
                   {options.map((item) => (

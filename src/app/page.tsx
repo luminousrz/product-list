@@ -9,12 +9,14 @@ import { CiSearch } from "react-icons/ci";
 import { GrNext, GrPrevious } from "react-icons/gr"; 
 import SortDropdown from "../features/components/SortDropdown";
 import CategoryDropdown from "../features/components/CategoryDropdown";
+import BrandDropdown from "../features/components/BrandDropdown";
 import { Swiper, SwiperSlide } from "swiper/react";
 import 'swiper/css';
 
+
 const ITEMS_PER_PAGE = 20;
 export default function Home() {
-  const { page, search, categories, sort, setPage, setSearch } = useProductStore();
+  const { page, search, categories, sort, brands, setPage, setSearch } = useProductStore();
   const debouncedSearch = useDebounce(search, 600);
   const { data, isLoading, isError } = useProducts({
     limit: 197, 
@@ -25,7 +27,8 @@ export default function Home() {
     if (!data?.products) return [];
     let result = data.products.filter((p) => {
       const matchesCategory = categories.length === 0 || categories.includes(p.category);
-      return matchesCategory;
+      const matchesBrand = brands.length === 0 || brands.includes(p.brand);
+      return matchesCategory && matchesBrand;
     });
     result = [...result].sort((a, b) => {
       switch (sort) {
@@ -42,7 +45,7 @@ export default function Home() {
       }
     });
     return result;
-  }, [data, categories, sort]);
+  }, [data, categories, sort, brands]);
 
   const totalPages = Math.ceil(processedProducts.length / ITEMS_PER_PAGE);
   const paginatedProducts = useMemo(() => {
@@ -77,6 +80,7 @@ export default function Home() {
   return (
     <div className="p-8">
       <ProductModal></ProductModal>
+      {/* Search Box */}
       <div className="flex justify-center items-center gap-5 mb-4">
         {data && (
           <p className="md:flex hidden">{processedProducts.length} Products</p>
@@ -87,15 +91,18 @@ export default function Home() {
           onChange={(e) => setSearch(e.target.value)} placeholder="Search Product..." className="w-[80%] px-5 py-1 placeholder:text-gray-400 outline-0 text-gray-500" />
         </div>
       </div>
-
+      {/* Filters Box */}
       <div className="flex items-center justify-center gap-3 mb-4">
+        {/* Mobile Device */}
           <div className="md:hidden w-full">
             <Swiper
               spaceBetween={8}
               slidesPerView={"auto"}
               grabCursor={true}
               touchStartPreventDefault={false}
-              className='w-full flex justify-center'
+              slidesOffsetBefore={20} 
+              slidesOffsetAfter={20}
+              className='w-full'
             >
               <SwiperSlide className="w-auto!">
                 <div onPointerDown={(e) => e.stopPropagation()}>
@@ -108,16 +115,19 @@ export default function Home() {
                   <CategoryDropdown />
                 </div>
               </SwiperSlide>
+
               <SwiperSlide className="w-auto!">
                 <div onPointerDown={(e) => e.stopPropagation()}>
-                  <CategoryDropdown />
+                  <BrandDropdown/>
                 </div>
               </SwiperSlide>
             </Swiper>
           </div>
+          {/* Desktop Mode */}
           <div className="hidden md:flex gap-4">
             <SortDropdown />
             <CategoryDropdown />
+            <BrandDropdown/>
           </div>
       </div>
       {/* Render products based on what you chose */}
