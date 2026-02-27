@@ -74,7 +74,9 @@ export default function FilterDropdown({
         <Dialog.Portal>
           <Dialog.Overlay className="fixed inset-0 bg-black/30 z-60" />
           <Dialog.Content className="fixed bottom-0 left-0 right-0 bg-white rounded-t-2xl p-4 z-70">
-            <h3 className="text-lg font-semibold mb-3">{title}</h3>
+            <Dialog.Title>
+              <p className="text-lg font-semibold mb-3">{title}</p>
+            </Dialog.Title>
             <ListContent />
             <div className="flex gap-2 mt-4">
               <button onClick={onClear} className="flex-1 py-2 rounded-xl border text-sm">Clear</button>

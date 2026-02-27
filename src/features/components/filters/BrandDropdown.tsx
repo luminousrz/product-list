@@ -1,8 +1,8 @@
 'use client'
 import { useMemo } from "react";
-import { useProducts } from "../products/hooks/useProducts";
-import { useProductStore } from "../store/product.store";
 import FilterDropdown from "./FilterDropdown";
+import { useProducts } from "../../products/hooks/useProducts";
+import { useProductStore } from "../../store/product.store";
 
 export default function BrandDropdown() {
   const { data } = useProducts({ limit: 197, skip: 0 });

@@ -1,5 +1,5 @@
-import { useCategories } from "../products/hooks/useCategories";
-import { useProductStore } from "../store/product.store";
+import { useCategories } from "../../products/hooks/useCategories";
+import { useProductStore } from "../../store/product.store";
 import FilterDropdown from "./FilterDropdown";
 
 export default function CategoryDropdown() {

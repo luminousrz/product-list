@@ -10,6 +10,8 @@ type ProductStore = {
   brands:  string[]
   minPrice: number,
   maxPrice: number,
+  inStock: boolean,
+  toggleStock: () => void,
   setPriceRange: (min: number , max: number) => void
   setPage: (page: number) => void;
   setSearch: (value: string) => void;
@@ -27,7 +29,12 @@ export const useProductStore = create<ProductStore>((set, get) => ({
   sort: 'newest',
   brands: [],
   minPrice: 0,
-  maxPrice: 5000,
+  maxPrice: 50000,
+  inStock: false,
+  toggleStock: () => set((state) => ({
+    inStock: !state.inStock,
+    page: 1,
+  })),
   setPriceRange: (min, max) => set({minPrice: min , maxPrice: max}),
   setPage: (page) => set({ page }),
   setSearch: (search) => set({ search, page: 1 }),
@@ -56,12 +63,12 @@ export const useProductStore = create<ProductStore>((set, get) => ({
   setSort: (sort) => set({ sort, page: 1 }),
 }));
 
+
 type ProductModalState = {
   selectedProduct: Product | null,
   open: (product: Product) => void
   close: () => void
 }
-
 export const useProductModal = create<ProductModalState>((set) => ({
   selectedProduct: null,
   open: (product) => set({selectedProduct: product}),

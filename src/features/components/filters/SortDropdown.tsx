@@ -1,8 +1,9 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import * as Select from "@radix-ui/react-select";
-import { SortOption } from "../products/types";
 import { BsChevronDown } from "react-icons/bs"; 
-import { useProductStore } from "../store/product.store";
+import { SortOption } from "../../products/types";
+import { useProductStore } from "../../store/product.store";
+
 
 const options: {label: string , value: SortOption} [] = [
     {label: "Newest" , value: "newest"},

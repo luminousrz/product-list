@@ -1,8 +1,8 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import * as Popover from "@radix-ui/react-popover";
 import * as Slider from "@radix-ui/react-slider";
-import { useProductStore } from "../store/product.store";
 import { BsChevronDown } from "react-icons/bs";
+import { useProductStore } from "../../store/product.store";
 
 export default function PriceFilter() {
   const { minPrice, maxPrice, setPriceRange } = useProductStore();
@@ -73,7 +73,7 @@ export default function PriceFilter() {
               <Dialog.Overlay className="fixed inset-0 bg-black/30 z-60" />
               <Dialog.Content className="fixed bottom-0 left-0 right-0 bg-white rounded-t-2xl p-4 z-70">
                 <Dialog.Title>
-                    <h3 className="text-lg font-semibold mb-3">Price Range</h3>
+                    <p className="text-lg font-semibold mb-3">Price Range</p>
                 </Dialog.Title>
                 <div className="flex gap-4 mb-6">
                     <div className="flex-1">
