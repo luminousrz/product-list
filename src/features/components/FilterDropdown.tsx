@@ -72,8 +72,8 @@ export default function FilterDropdown({
           </button>
         </Dialog.Trigger>
         <Dialog.Portal>
-          <Dialog.Overlay className="fixed inset-0 bg-black/30 z-[60]" />
-          <Dialog.Content className="fixed bottom-0 left-0 right-0 bg-white rounded-t-2xl p-4 z-[70]">
+          <Dialog.Overlay className="fixed inset-0 bg-black/30 z-60" />
+          <Dialog.Content className="fixed bottom-0 left-0 right-0 bg-white rounded-t-2xl p-4 z-70">
             <h3 className="text-lg font-semibold mb-3">{title}</h3>
             <ListContent />
             <div className="flex gap-2 mt-4">

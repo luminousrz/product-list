@@ -8,6 +8,9 @@ type ProductStore = {
   categories: string[];
   sort: SortOption;
   brands:  string[]
+  minPrice: number,
+  maxPrice: number,
+  setPriceRange: (min: number , max: number) => void
   setPage: (page: number) => void;
   setSearch: (value: string) => void;
   toggleCategory: (slug: string) => void;
@@ -23,6 +26,9 @@ export const useProductStore = create<ProductStore>((set, get) => ({
   categories: [],
   sort: 'newest',
   brands: [],
+  minPrice: 0,
+  maxPrice: 5000,
+  setPriceRange: (min, max) => set({minPrice: min , maxPrice: max}),
   setPage: (page) => set({ page }),
   setSearch: (search) => set({ search, page: 1 }),
   toggleCategory: (slug) => {

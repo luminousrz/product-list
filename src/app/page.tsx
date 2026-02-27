@@ -11,13 +11,16 @@ import SortDropdown from "../features/components/SortDropdown";
 import CategoryDropdown from "../features/components/CategoryDropdown";
 import BrandDropdown from "../features/components/BrandDropdown";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { useTransition } from "react";
 import 'swiper/css';
+import PriceFilter from "../features/components/PriceFilter";
 
 
 const ITEMS_PER_PAGE = 20;
 export default function Home() {
-  const { page, search, categories, sort, brands, setPage, setSearch } = useProductStore();
+  const { page, search, categories, sort, brands, setPage, setSearch, minPrice, maxPrice, setPriceRange } = useProductStore();
   const debouncedSearch = useDebounce(search, 600);
+  const [isPending, startTransition] = useTransition();
   const { data, isLoading, isError } = useProducts({
     limit: 197, 
     skip: 0,
@@ -28,7 +31,10 @@ export default function Home() {
     let result = data.products.filter((p) => {
       const matchesCategory = categories.length === 0 || categories.includes(p.category);
       const matchesBrand = brands.length === 0 || brands.includes(p.brand);
-      return matchesCategory && matchesBrand;
+      const discountAmount = (p.price * p.discountPercentage) / 100;
+      const finalPrice = p.price - discountAmount;
+      const matchesPrice = finalPrice >= minPrice && finalPrice <= maxPrice;
+      return matchesCategory && matchesBrand && matchesPrice;
     });
     result = [...result].sort((a, b) => {
       switch (sort) {
@@ -45,7 +51,7 @@ export default function Home() {
       }
     });
     return result;
-  }, [data, categories, sort, brands]);
+  }, [data, categories, sort, brands, minPrice, maxPrice]);
 
   const totalPages = Math.ceil(processedProducts.length / ITEMS_PER_PAGE);
   const paginatedProducts = useMemo(() => {
@@ -121,6 +127,11 @@ export default function Home() {
                   <BrandDropdown/>
                 </div>
               </SwiperSlide>
+              <SwiperSlide className="w-auto!">
+                <div onPointerDown={(e) => e.stopPropagation()}>
+                  <PriceFilter></PriceFilter>
+                </div>
+              </SwiperSlide>
             </Swiper>
           </div>
           {/* Desktop Mode */}
@@ -128,7 +139,13 @@ export default function Home() {
             <SortDropdown />
             <CategoryDropdown />
             <BrandDropdown/>
+            <PriceFilter></PriceFilter>
           </div>
+          {isPending && (
+            <p className="text-center text-sm text-gray-400 animate-pulse mb-4">
+              Updating price results...
+            </p>
+          )}
       </div>
       {/* Render products based on what you chose */}
       <div className="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-5">

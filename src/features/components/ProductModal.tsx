@@ -7,7 +7,6 @@ import { BiBadgeCheck } from "react-icons/bi";
 import { FaShippingFast } from "react-icons/fa"; 
 import ProductGallery from './ProductGallery';
 import { useState } from 'react';
-import { Product } from '../products/types';
 
 
 export default function ProductModal() {
@@ -17,7 +16,6 @@ export default function ProductModal() {
   const discountAmount = ((product?.price ?? 0) * (product?.discountPercentage ?? 0)) / 100
   const finalPrice = ((product?.price ?? 0) - discountAmount);
   
-
   const addToCart = () => {
     setIsCartModalOepn(true)
   }
